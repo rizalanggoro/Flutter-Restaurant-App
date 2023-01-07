@@ -22,6 +22,13 @@ class _State extends State<RestaurantListPage> {
   final ValueNotifier<bool> _valueNotifierUseFilter = ValueNotifier(false);
 
   @override
+  void dispose() {
+    super.dispose();
+
+    _textEditingController.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     _utils = Utils(context);
 
