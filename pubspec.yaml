@@ -38,6 +38,7 @@ dependencies:
   google_fonts: ^3.0.1
   get: ^4.6.5
   flutter_statusbarcolor_ns: ^0.5.0
+  http: ^0.13.5
 
 dev_dependencies:
   flutter_test:
