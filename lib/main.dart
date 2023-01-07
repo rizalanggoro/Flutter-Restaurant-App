@@ -1,3 +1,4 @@
+import 'package:dicoding_restaurant_app/data/api/api_service.dart';
 import 'package:dicoding_restaurant_app/data/model/restaurant.dart';
 import 'package:dicoding_restaurant_app/pages/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/pages/restaurant_list.dart';
@@ -13,6 +14,10 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final ApiService apiService = ApiService();
+
+    apiService.fetchAllRestaurants().then((value) => print(value));
+
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Restaurant App',

@@ -113,22 +113,22 @@ class _State extends State<RestaurantDetailPage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 4,
-                child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.all(0),
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => _listItemMenu(
-                    (widget.restaurant.menus!['foods'] as List)[index]['name'],
-                    index,
-                    index ==
-                        ((widget.restaurant.menus!['foods'] as List).length -
-                            1),
-                  ),
-                  itemCount: (widget.restaurant.menus!['foods'] as List).length,
-                ),
-              ),
+              // SizedBox(
+              //   height: MediaQuery.of(context).size.height / 4,
+              //   child: ListView.builder(
+              //     physics: const BouncingScrollPhysics(),
+              //     padding: const EdgeInsets.all(0),
+              //     scrollDirection: Axis.horizontal,
+              //     itemBuilder: (context, index) => _listItemMenu(
+              //       (widget.restaurant.menus!['foods'] as List)[index]['name'],
+              //       index,
+              //       index ==
+              //           ((widget.restaurant.menus!['foods'] as List).length -
+              //               1),
+              //     ),
+              //     itemCount: (widget.restaurant.menus!['foods'] as List).length,
+              //   ),
+              // ),
 
               // drinks
               Padding(
@@ -147,24 +147,24 @@ class _State extends State<RestaurantDetailPage> {
                   ),
                 ),
               ),
-              SizedBox(
-                height: MediaQuery.of(context).size.height / 4,
-                child: ListView.builder(
-                  physics: const BouncingScrollPhysics(),
-                  padding: const EdgeInsets.all(0),
-                  scrollDirection: Axis.horizontal,
-                  itemBuilder: (context, index) => _listItemMenu(
-                    (widget.restaurant.menus!['drinks'] as List)[index]['name'],
-                    index,
-                    index ==
-                        ((widget.restaurant.menus!['drinks'] as List).length -
-                            1),
-                    isFood: false,
-                  ),
-                  itemCount:
-                      (widget.restaurant.menus!['drinks'] as List).length,
-                ),
-              ),
+              // SizedBox(
+              //   height: MediaQuery.of(context).size.height / 4,
+              //   child: ListView.builder(
+              //     physics: const BouncingScrollPhysics(),
+              //     padding: const EdgeInsets.all(0),
+              //     scrollDirection: Axis.horizontal,
+              //     itemBuilder: (context, index) => _listItemMenu(
+              //       (widget.restaurant.menus!['drinks'] as List)[index]['name'],
+              //       index,
+              //       index ==
+              //           ((widget.restaurant.menus!['drinks'] as List).length -
+              //               1),
+              //       isFood: false,
+              //     ),
+              //     itemCount:
+              //         (widget.restaurant.menus!['drinks'] as List).length,
+              //   ),
+              // ),
 
               const SizedBox(height: 32),
             ],
