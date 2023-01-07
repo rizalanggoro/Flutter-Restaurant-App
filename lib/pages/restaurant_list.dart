@@ -13,6 +13,13 @@ class RestaurantListPage extends StatefulWidget {
 
 class _State extends State<RestaurantListPage> {
   late Utils _utils;
+  final TextEditingController _textEditingController = TextEditingController();
+  final FocusNode _focusNode = FocusNode();
+
+  late List<Restaurant> _listRestaurant;
+  late List<Restaurant> _filteredListRestaurant;
+
+  final ValueNotifier<bool> _valueNotifierUseFilter = ValueNotifier(false);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +29,8 @@ class _State extends State<RestaurantListPage> {
       body: FutureBuilder(
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return _body(parseRestaurants(snapshot.data));
+            _listRestaurant = parseRestaurants(snapshot.data);
+            return _body();
           }
 
           return Container();
@@ -33,7 +41,7 @@ class _State extends State<RestaurantListPage> {
     );
   }
 
-  Widget _body(List<Restaurant> list) {
+  Widget _body() {
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
       child: Column(
@@ -60,26 +68,116 @@ class _State extends State<RestaurantListPage> {
             padding: const EdgeInsets.only(
               left: 16,
               right: 16,
-              bottom: 16,
+              bottom: 24,
             ),
             child: Text(
               'Recommendation restaurant for you!',
               style: TextStyle(
                 fontSize: _utils.textTheme.subtitle1!.fontSize,
-                color: Colors.black.withOpacity(.64),
+                color: Colors.grey.shade600,
               ),
             ),
           ),
 
+          // search box
+          Container(
+            margin: const EdgeInsets.only(
+              left: 16,
+              right: 16,
+              bottom: 16,
+            ),
+            height: 56,
+            decoration: BoxDecoration(
+                border: Border.all(
+                  color: Colors.grey.shade200,
+                  width: 1.32,
+                ),
+                color: Colors.white,
+                borderRadius: const BorderRadius.all(Radius.circular(28))),
+            child: Row(children: [
+              const SizedBox(
+                  height: 56,
+                  width: 56,
+                  child: Center(
+                      child: Icon(
+                    Icons.search_rounded,
+                    color: Colors.indigo,
+                  ))),
+              Expanded(
+                child: TextField(
+                  focusNode: _focusNode,
+                  onEditingComplete: () {
+                    var text = _textEditingController.text;
+                    _filteredListRestaurant = _listRestaurant
+                        .where((element) => element.name!
+                            .toLowerCase()
+                            .contains(text.toLowerCase()))
+                        .toList();
+                    _valueNotifierUseFilter.value = true;
+                  },
+                  controller: _textEditingController,
+                  style: TextStyle(
+                    fontSize: _utils.textTheme.bodyText1!.fontSize,
+                  ),
+                  keyboardType: TextInputType.name,
+                  textInputAction: TextInputAction.search,
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    hintText: 'Search restaurant...',
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 56,
+                width: 56,
+                child: Center(
+                  child: IconButton(
+                    onPressed: () {
+                      _textEditingController.text = '';
+                      _focusNode.unfocus();
+                      _filteredListRestaurant.clear();
+                      _valueNotifierUseFilter.value = false;
+                    },
+                    icon: Icon(
+                      Icons.close_rounded,
+                      color: Colors.grey.shade600,
+                    ),
+                  ),
+                ),
+              ),
+            ]),
+          ),
+
           // list restaurants
-          ListView.builder(
-            padding: const EdgeInsets.all(0),
-            itemBuilder: (context, index) =>
-                _listItemRestaurant(list[index], index == (list.length - 1)),
-            itemCount: list.length,
-            shrinkWrap: true,
-            physics: const NeverScrollableScrollPhysics(),
-          )
+          ValueListenableBuilder(
+              valueListenable: _valueNotifierUseFilter,
+              builder: (context, bool value, child) {
+                List<Restaurant> list =
+                    value ? _filteredListRestaurant : _listRestaurant;
+
+                if (list.isNotEmpty) {
+                  return ListView.builder(
+                    padding: const EdgeInsets.all(0),
+                    itemBuilder: (context, index) => _listItemRestaurant(
+                        list[index], index == (list.length - 1)),
+                    itemCount: list.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                  );
+                } else {
+                  return Container(
+                    padding: const EdgeInsets.all(16),
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Restaurant not found. Try another word',
+                      style: TextStyle(
+                        fontSize: _utils.textTheme.subtitle1!.fontSize,
+                        color: Colors.grey.shade600,
+                      ),
+                    ),
+                  );
+                }
+              })
         ],
       ),
     );
@@ -165,7 +263,7 @@ class _State extends State<RestaurantListPage> {
                     Text(
                       restaurant.city!,
                       style: TextStyle(
-                        color: Colors.grey.shade700,
+                        color: Colors.grey.shade600,
                       ),
                     ),
                   ],
@@ -186,7 +284,7 @@ class _State extends State<RestaurantListPage> {
                     Text(
                       '${restaurant.rating!}',
                       style: TextStyle(
-                        color: Colors.grey.shade700,
+                        color: Colors.grey.shade600,
                       ),
                     ),
                   ],
