@@ -1,4 +1,4 @@
-import 'package:dicoding_restaurant_app/models/restaurant.dart';
+import 'package:dicoding_restaurant_app/data/model/restaurant.dart';
 import 'package:dicoding_restaurant_app/pages/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/pages/restaurant_list.dart';
 import 'package:dicoding_restaurant_app/pages/splash.dart';
