@@ -42,6 +42,8 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
 
     List<dynamic> listFoods = restaurantDetail.menus['foods'];
     List<dynamic> listDrinks = restaurantDetail.menus['drinks'];
+    List<dynamic> listCustomerReviews = restaurantDetail.customerReviews;
+    listCustomerReviews.sort((a, b) => b['date'].compareTo(a['date']));
 
     return SingleChildScrollView(
       child: Column(
@@ -258,6 +260,123 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
               itemCount: listDrinks.length,
             ),
           ),
+
+          const SizedBox(height: 16),
+          const Divider(),
+
+          // customer review
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 16,
+              right: 16,
+              left: 16,
+              bottom: 8,
+            ),
+            child: Text(
+              'Customer Reviews',
+              style: TextStyle(
+                fontSize: Get.textTheme.headline6!.fontSize,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          ListView.builder(
+            itemBuilder: (context, index) => _listItemReview(
+              listCustomerReviews[index],
+              index: index,
+              len: listCustomerReviews.length,
+            ),
+            itemCount: listCustomerReviews.length,
+            shrinkWrap: true,
+            physics: const NeverScrollableScrollPhysics(),
+            padding: const EdgeInsets.all(0),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _listItemReview(
+    Map<String, dynamic> map, {
+    required int index,
+    required int len,
+  }) {
+    return Container(
+      margin: EdgeInsets.only(
+        left: 16,
+        right: 16,
+        top: 16,
+        bottom: index == (len - 1) ? 24 : 0,
+      ),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // name and date
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              // icon
+              Container(
+                margin: const EdgeInsets.only(right: 16),
+                height: 24,
+                width: 24,
+                decoration: BoxDecoration(
+                  color: Get.theme.colorScheme.secondaryContainer,
+                  borderRadius: const BorderRadius.all(Radius.circular(12)),
+                ),
+                child: Icon(
+                  Icons.person_rounded,
+                  size: 16,
+                  color: Get.theme.colorScheme.secondary,
+                ),
+              ),
+
+              // name
+              Expanded(
+                  child: Text(
+                map['name'] ?? '-',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                style: TextStyle(
+                  color: Get.theme.colorScheme.onBackground,
+                  fontSize: Get.textTheme.subtitle1!.fontSize,
+                ),
+              )),
+              const SizedBox(width: 16),
+
+              // date
+              Text(
+                map['date'] ?? '-',
+                style: TextStyle(
+                  color: Get.theme.colorScheme.onBackground.withOpacity(.64),
+                  fontSize: Get.textTheme.bodySmall!.fontSize,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+
+          // review
+          Padding(
+            padding: const EdgeInsets.only(left: 40),
+            child: Text(
+              map['review'] ?? '-',
+              style: TextStyle(
+                color: Get.theme.colorScheme.onBackground.withOpacity(.64),
+                fontSize: Get.textTheme.bodyMedium!.fontSize,
+              ),
+            ),
+          ),
+
+          // divider
+          if (index != (len - 1))
+            const Padding(
+              padding: EdgeInsets.only(
+                left: 40,
+                top: 8,
+              ),
+              child: Divider(),
+            ),
         ],
       ),
     );
