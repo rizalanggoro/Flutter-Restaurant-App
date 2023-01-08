@@ -5,6 +5,7 @@ import 'package:dicoding_restaurant_app/pages/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/pages/restaurant_list.dart';
 import 'package:dicoding_restaurant_app/pages/splash.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 void main() {
   runApp(const MyApp());
@@ -19,7 +20,7 @@ class MyApp extends StatelessWidget {
 
     apiService.fetchAllRestaurants().then((value) => print(value));
 
-    return MaterialApp(
+    return GetMaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'Restaurant App',
       theme: ThemeData(

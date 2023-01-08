@@ -1,14 +1,11 @@
+import 'package:dicoding_restaurant_app/controller/home.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends GetView<HomeController> {
   static String route = '/home-page';
   const HomePage({Key? key}) : super(key: key);
 
-  @override
-  State<StatefulWidget> createState() => _State();
-}
-
-class _State extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold();
