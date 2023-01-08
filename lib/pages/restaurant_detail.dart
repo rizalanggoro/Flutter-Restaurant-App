@@ -19,7 +19,7 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
 
     RestaurantDetailController controller =
         Get.put(RestaurantDetailController());
-    controller.fetchData(id);
+    // controller.fetchData(id);
 
     return Scaffold(
       backgroundColor: Get.theme.colorScheme.background,
@@ -39,6 +39,9 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
   Widget _buildDetailScreen(RestaurantDetailController controller) {
     RestaurantDetail restaurantDetail =
         controller.restaurantDetailResult.restaurant;
+
+    List<dynamic> listFoods = restaurantDetail.menus['foods'];
+    List<dynamic> listDrinks = restaurantDetail.menus['drinks'];
 
     return SingleChildScrollView(
       child: Column(
@@ -177,6 +180,7 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
               left: 16,
               right: 16,
               top: 16,
+              bottom: 16,
             ),
             child: Text(
               restaurantDetail.description,
@@ -186,7 +190,148 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
               ),
             ),
           ),
+
+          const Divider(),
+
+          // foods
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 16,
+              right: 16,
+              left: 16,
+              bottom: 8,
+            ),
+            child: Text(
+              'Foods',
+              style: TextStyle(
+                fontSize: Get.textTheme.headline6!.fontSize,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: Get.size.height / 4,
+            child: ListView.builder(
+              padding: const EdgeInsets.all(0),
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return _listItemMenu(
+                  title: restaurantDetail.name,
+                  isFirst: index == 0,
+                  isLast: index == (listFoods.length - 1),
+                  isFood: true,
+                );
+              },
+              itemCount: listFoods.length,
+            ),
+          ),
+
+          // drinks
+          Padding(
+            padding: const EdgeInsets.only(
+              top: 16,
+              right: 16,
+              left: 16,
+              bottom: 8,
+            ),
+            child: Text(
+              'Drinks',
+              style: TextStyle(
+                fontSize: Get.textTheme.headline6!.fontSize,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: Get.size.height / 4,
+            child: ListView.builder(
+              padding: const EdgeInsets.all(0),
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) {
+                return _listItemMenu(
+                  title: restaurantDetail.name,
+                  isFirst: index == 0,
+                  isLast: index == (listDrinks.length - 1),
+                  isFood: false,
+                );
+              },
+              itemCount: listDrinks.length,
+            ),
+          ),
         ],
+      ),
+    );
+  }
+
+  Widget _listItemMenu({
+    required String title,
+    required bool isFirst,
+    required bool isLast,
+    required bool isFood,
+  }) {
+    return Container(
+      margin: EdgeInsets.only(
+        left: isFirst ? 16 : 8,
+        right: isLast ? 16 : 0,
+      ),
+      width: Get.size.width / 1.64,
+      height: Get.size.height / 4,
+      child: Card(
+        elevation: 0,
+        margin: const EdgeInsets.all(0),
+        clipBehavior: Clip.hardEdge,
+        shape: RoundedRectangleBorder(
+          side: BorderSide(
+            color: Get.theme.colorScheme.outline,
+          ),
+          borderRadius: const BorderRadius.all(Radius.circular(16)),
+        ),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Expanded(
+              child: Container(
+                width: double.infinity,
+                clipBehavior: Clip.hardEdge,
+                decoration: const BoxDecoration(
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
+                ),
+                child: Image.network(
+                  'https://source.unsplash.com/random/?${isFood ? 'food' : 'drink'}',
+                  fit: BoxFit.cover,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 16,
+                right: 16,
+                top: 16,
+              ),
+              child: Text(
+                title,
+                style: TextStyle(
+                  fontSize: Get.textTheme.subtitle1!.fontSize,
+                  color: Get.theme.colorScheme.onBackground,
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 16,
+                right: 16,
+                bottom: 16,
+              ),
+              child: Text(
+                'IDR 15.000',
+                style: TextStyle(
+                  fontSize: Get.textTheme.bodyMedium!.fontSize,
+                  color: Get.theme.colorScheme.onBackground.withOpacity(.64),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -252,59 +397,6 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
           ),
         ],
       ),
-    );
-  }
-
-  Widget _listItemMenu(
-    String name,
-    int index,
-    bool isLast, {
-    bool isFood = true,
-  }) {
-    return Card(
-      margin: EdgeInsets.only(
-        left: index == 0 ? 16 : 8,
-        right: isLast ? 16 : 0,
-        bottom: 2,
-      ),
-      clipBehavior: Clip.hardEdge,
-      child: SizedBox(
-          width: Get.size.width / 1.64,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Expanded(
-                child: Image.network(
-                  isFood
-                      ? 'https://images.unsplash.com/photo-1481070555726-e2fe8357725c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=435&q=80'
-                      : 'https://images.unsplash.com/photo-1609951651556-5334e2706168?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8NDR8fGZvb2R8ZW58MHx8MHx8&auto=format&fit=crop&w=400&q=60',
-                  fit: BoxFit.cover,
-                  width: double.infinity,
-                ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        name,
-                        style: TextStyle(
-                          fontSize: Get.textTheme.bodyText1!.fontSize,
-                          color: Colors.black,
-                        ),
-                      ),
-                      Text(
-                        'IDR 15.000',
-                        style: TextStyle(
-                          color: Colors.grey.shade700,
-                          fontSize: Get.textTheme.caption!.fontSize,
-                        ),
-                      ),
-                    ]),
-              )
-            ],
-          )),
     );
   }
 }
