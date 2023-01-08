@@ -1,5 +1,6 @@
 import 'package:dicoding_restaurant_app/data/api/api_service.dart';
 import 'package:dicoding_restaurant_app/data/model/restaurant.dart';
+import 'package:dicoding_restaurant_app/pages/home.dart';
 import 'package:dicoding_restaurant_app/pages/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/pages/restaurant_list.dart';
 import 'package:dicoding_restaurant_app/pages/splash.dart';
@@ -28,6 +29,7 @@ class MyApp extends StatelessWidget {
       initialRoute: SplashPage.route,
       routes: {
         SplashPage.route: (context) => const SplashPage(),
+        HomePage.route: (context) => const HomePage(),
         RestaurantListPage.route: (context) => const RestaurantListPage(),
         RestaurantDetailPage.route: (context) => RestaurantDetailPage(
               restaurant:
