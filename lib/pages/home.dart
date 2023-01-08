@@ -11,10 +11,6 @@ class HomePage extends GetView<HomeController> {
   @override
   Widget build(BuildContext context) {
     final HomeController controller = Get.put(HomeController());
-    final pages = [
-      const HomeListFragment(),
-      const HomeSearchFragment(),
-    ];
 
     return Scaffold(
       backgroundColor: Get.theme.colorScheme.background,
@@ -36,7 +32,14 @@ class HomePage extends GetView<HomeController> {
         ),
       ),
       body: Obx(
-        () => pages[controller.navigationBarIndex.value],
+        () => PageView(
+          controller: controller.pageController,
+          children: const [
+            HomeListFragment(),
+            HomeSearchFragment(),
+          ],
+          onPageChanged: (value) => controller.changeNavigationBarIndex(value),
+        ),
       ),
     );
   }
