@@ -3,6 +3,7 @@ import 'dart:ui';
 import 'package:dicoding_restaurant_app/pages/home.dart';
 import 'package:dicoding_restaurant_app/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 
 class SplashPage extends StatelessWidget {
   static String route = '/splash';
@@ -10,6 +11,9 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
+    FlutterStatusbarcolor.setStatusBarWhiteForeground(true);
+
     Utils utils = Utils(context);
 
     return Scaffold(
