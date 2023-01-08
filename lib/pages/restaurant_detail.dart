@@ -97,7 +97,7 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
                   child: Text(
                     '${restaurantDetail.address}, ${restaurantDetail.city}',
                     style: TextStyle(
-                      fontSize: Get.textTheme.subtitle1!.fontSize,
+                      fontSize: Get.textTheme.bodyMedium!.fontSize,
                       color:
                           Get.theme.colorScheme.onBackground.withOpacity(.64),
                     ),
@@ -137,7 +137,7 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
                   child: Text(
                     '${restaurantDetail.rating}',
                     style: TextStyle(
-                      fontSize: Get.textTheme.subtitle1!.fontSize,
+                      fontSize: Get.textTheme.bodyMedium!.fontSize,
                       color:
                           Get.theme.colorScheme.onBackground.withOpacity(.64),
                     ),
@@ -161,8 +161,8 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
                     label: Text(
                       restaurantDetail.categories[index]['name'],
                       style: TextStyle(
-                        fontSize: Get.textTheme.bodyText2!.fontSize,
-                        color: Get.theme.colorScheme.onSecondaryContainer,
+                        fontSize: Get.textTheme.bodyMedium!.fontSize,
+                        color: Get.theme.colorScheme.secondary,
                       ),
                     ),
                     backgroundColor: Get.theme.colorScheme.secondaryContainer,
@@ -186,7 +186,7 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
             child: Text(
               restaurantDetail.description,
               style: TextStyle(
-                fontSize: Get.textTheme.bodyText1!.fontSize,
+                fontSize: Get.textTheme.bodyMedium!.fontSize,
                 color: Get.theme.colorScheme.onBackground.withOpacity(.64),
               ),
             ),
