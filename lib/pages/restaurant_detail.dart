@@ -42,7 +42,6 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
     List<dynamic> listFoods = restaurantDetail.menus['foods'];
     List<dynamic> listDrinks = restaurantDetail.menus['drinks'];
     List<dynamic> listCustomerReviews = restaurantDetail.customerReviews;
-    listCustomerReviews.sort((a, b) => b['date'].compareTo(a['date']));
 
     return SingleChildScrollView(
       child: Column(

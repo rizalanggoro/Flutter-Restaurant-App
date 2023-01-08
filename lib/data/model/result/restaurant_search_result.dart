@@ -1,9 +1,7 @@
-import 'package:dicoding_restaurant_app/data/model/restaurant.dart';
-
 class RestaurantSearchResult {
   final bool error;
   final int founded;
-  final List<Restaurant> restaurants;
+  final List<dynamic> restaurants;
 
   RestaurantSearchResult({
     required this.error,

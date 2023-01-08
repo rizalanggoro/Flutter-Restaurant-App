@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:dicoding_restaurant_app/data/model/result/restaurant_detail_result.dart';
 import 'package:dicoding_restaurant_app/data/model/result/restaurant_list_result.dart';
+import 'package:dicoding_restaurant_app/data/model/result/restaurant_search_result.dart';
 import 'package:http/http.dart' as http;
 
 class ApiService {
@@ -22,6 +23,15 @@ class ApiService {
       return RestaurantDetailResult.fromMap(jsonDecode(response.body));
     } else {
       throw Exception('Failed to retrieve restaurant details');
+    }
+  }
+
+  Future<RestaurantSearchResult> searchRestaurant(String query) async {
+    final response = await http.get(Uri.parse('${_baseUrl}search?q=$query'));
+    if (response.statusCode == 200) {
+      return RestaurantSearchResult.fromMap(jsonDecode(response.body));
+    } else {
+      throw Exception('Failed to search for restaurant data');
     }
   }
 }
