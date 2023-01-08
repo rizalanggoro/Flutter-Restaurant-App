@@ -1,7 +1,9 @@
 import 'package:dicoding_restaurant_app/controller/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/data/model/restaurant.dart';
+import 'package:dicoding_restaurant_app/data/model/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/data/states/result_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
 
 class RestaurantDetailPage extends GetView<RestaurantDetailController> {
@@ -35,7 +37,158 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
   }
 
   Widget _buildDetailScreen(RestaurantDetailController controller) {
-    return Container();
+    RestaurantDetail restaurantDetail =
+        controller.restaurantDetailResult.restaurant;
+
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // image
+          Container(
+            clipBehavior: Clip.hardEdge,
+            decoration: const BoxDecoration(
+              borderRadius: BorderRadius.all(Radius.circular(16)),
+            ),
+            child: Image.network(
+              'https://restaurant-api.dicoding.dev/images/medium/${restaurantDetail.pictureId}',
+              fit: BoxFit.cover,
+              width: double.infinity,
+              height: Get.size.height / 3,
+            ),
+          ),
+
+          // restaurant name
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 16,
+              right: 16,
+              top: 16,
+            ),
+            child: Text(
+              restaurantDetail.name,
+              style: TextStyle(
+                fontSize: Get.textTheme.headline4!.fontSize,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+
+          // restaurant address & city
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 16,
+              right: 16,
+              top: 8,
+            ),
+            child: Row(
+              children: [
+                Icon(
+                  Icons.location_on_rounded,
+                  size: 24,
+                  color: Get.theme.colorScheme.primary,
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    '${restaurantDetail.address}, ${restaurantDetail.city}',
+                    style: TextStyle(
+                      fontSize: Get.textTheme.subtitle1!.fontSize,
+                      color:
+                          Get.theme.colorScheme.onBackground.withOpacity(.64),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // restaurant rating
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 16,
+              right: 16,
+              top: 8,
+              bottom: 8,
+            ),
+            child: Row(
+              children: [
+                RatingBar.builder(
+                  glow: false,
+                  ignoreGestures: true,
+                  itemSize: 24,
+                  unratedColor:
+                      Get.theme.colorScheme.onSurfaceVariant.withOpacity(.24),
+                  initialRating: restaurantDetail.rating,
+                  itemCount: 5,
+                  allowHalfRating: true,
+                  itemBuilder: (context, index) => const Icon(
+                    Icons.star_rounded,
+                    color: Colors.amber,
+                  ),
+                  onRatingUpdate: (value) {},
+                ),
+                const SizedBox(width: 8),
+                Expanded(
+                  child: Text(
+                    '${restaurantDetail.rating}',
+                    style: TextStyle(
+                      fontSize: Get.textTheme.subtitle1!.fontSize,
+                      color:
+                          Get.theme.colorScheme.onBackground.withOpacity(.64),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+
+          // categories
+          SizedBox(
+            height: 48,
+            child: ListView.builder(
+              padding: const EdgeInsets.all(0),
+              itemBuilder: (context, index) {
+                return Padding(
+                  padding: EdgeInsets.only(
+                    left: index == 0 ? 16 : 8,
+                  ),
+                  child: Chip(
+                    label: Text(
+                      restaurantDetail.categories[index]['name'],
+                      style: TextStyle(
+                        fontSize: Get.textTheme.bodyText2!.fontSize,
+                        color: Get.theme.colorScheme.onSecondaryContainer,
+                      ),
+                    ),
+                    backgroundColor: Get.theme.colorScheme.secondaryContainer,
+                  ),
+                );
+              },
+              itemCount: restaurantDetail.categories.length,
+              physics: const NeverScrollableScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+            ),
+          ),
+
+          // restaurant description
+          Padding(
+            padding: const EdgeInsets.only(
+              left: 16,
+              right: 16,
+              top: 16,
+            ),
+            child: Text(
+              restaurantDetail.description,
+              style: TextStyle(
+                fontSize: Get.textTheme.bodyText1!.fontSize,
+                color: Get.theme.colorScheme.onBackground.withOpacity(.64),
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 
   Widget _errorMessage(String message) {
