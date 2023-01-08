@@ -167,7 +167,7 @@ class HomeListFragment extends GetView<HomeListController> {
                 child: Text(
                   restaurant.name,
                   style: TextStyle(
-                    fontSize: Get.textTheme.headline6!.fontSize,
+                    fontSize: Get.textTheme.subtitle1!.fontSize,
                     color: Get.theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
@@ -182,7 +182,7 @@ class HomeListFragment extends GetView<HomeListController> {
                   maxLines: 2,
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
-                    fontSize: Get.textTheme.subtitle1!.fontSize,
+                    fontSize: Get.textTheme.bodyMedium!.fontSize,
                     color:
                         Get.theme.colorScheme.onSurfaceVariant.withOpacity(.64),
                   ),
@@ -206,6 +206,7 @@ class HomeListFragment extends GetView<HomeListController> {
                       style: TextStyle(
                         color: Get.theme.colorScheme.onSurfaceVariant
                             .withOpacity(.64),
+                        fontSize: Get.textTheme.bodyMedium!.fontSize,
                       ),
                     ),
                   ],
@@ -239,6 +240,7 @@ class HomeListFragment extends GetView<HomeListController> {
                       style: TextStyle(
                         color: Get.theme.colorScheme.onSurfaceVariant
                             .withOpacity(.64),
+                        fontSize: Get.textTheme.bodyMedium!.fontSize,
                       ),
                     ),
                   ],
