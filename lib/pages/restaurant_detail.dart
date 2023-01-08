@@ -1,179 +1,113 @@
+import 'package:dicoding_restaurant_app/controller/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/data/model/restaurant.dart';
-import 'package:dicoding_restaurant_app/utils/utils.dart';
+import 'package:dicoding_restaurant_app/data/states/result_state.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
-class RestaurantDetailPage extends StatefulWidget {
+class RestaurantDetailPage extends GetView<RestaurantDetailController> {
   static String route = '/restaurant-detail';
-
-  final Restaurant restaurant;
 
   const RestaurantDetailPage({
     Key? key,
-    required this.restaurant,
   }) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _State();
-}
-
-class _State extends State<RestaurantDetailPage> {
-  late Utils _utils;
-
-  @override
   Widget build(BuildContext context) {
-    _utils = Utils(context);
+    String id = Get.arguments['id'];
+
+    RestaurantDetailController controller =
+        Get.put(RestaurantDetailController());
+    controller.fetchData(id);
 
     return Scaffold(
-      body: SingleChildScrollView(
-          physics: const BouncingScrollPhysics(),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Container(
-                clipBehavior: Clip.hardEdge,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                ),
-                child: Hero(
-                  tag: widget.restaurant.pictureId!,
-                  child: Image.network(
-                    widget.restaurant.pictureId!,
-                  ),
-                ),
-              ),
+      backgroundColor: Get.theme.colorScheme.background,
+      body: Obx(() {
+        var state = controller.resultState.value;
+        if (state == ResultState.loading) {
+          return _loading;
+        } else if (state == ResultState.error) {
+          return _errorMessage(controller.message);
+        }
 
-              // title
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 16,
-                  right: 16,
-                  top: 16,
-                ),
-                child: Text(
-                  widget.restaurant.name!,
-                  style: TextStyle(
-                    fontSize: _utils.textTheme.headline4!.fontSize,
-                  ),
-                ),
-              ),
-
-              // location
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 16,
-                  right: 16,
-                  top: 16,
-                ),
-                child: Row(children: [
-                  const Icon(
-                    Icons.location_on_rounded,
-                    color: Colors.indigo,
-                  ),
-                  const SizedBox(width: 8),
-                  Text(
-                    widget.restaurant.city!,
-                    style: TextStyle(
-                      fontSize: _utils.textTheme.subtitle1!.fontSize,
-                      color: Colors.grey.shade700,
-                    ),
-                  )
-                ]),
-              ),
-
-              // description
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 16,
-                  right: 16,
-                  top: 24,
-                ),
-                child: Text(
-                  widget.restaurant.description!,
-                  style: TextStyle(
-                    color: Colors.grey.shade700,
-                    fontSize: _utils.textTheme.bodyText1!.fontSize,
-                  ),
-                ),
-              ),
-
-              // foods
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 16,
-                  right: 16,
-                  top: 24,
-                  bottom: 8,
-                ),
-                child: Text(
-                  'Foods',
-                  style: TextStyle(
-                    fontSize: _utils.textTheme.headline6!.fontSize,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              // SizedBox(
-              //   height: MediaQuery.of(context).size.height / 4,
-              //   child: ListView.builder(
-              //     physics: const BouncingScrollPhysics(),
-              //     padding: const EdgeInsets.all(0),
-              //     scrollDirection: Axis.horizontal,
-              //     itemBuilder: (context, index) => _listItemMenu(
-              //       (widget.restaurant.menus!['foods'] as List)[index]['name'],
-              //       index,
-              //       index ==
-              //           ((widget.restaurant.menus!['foods'] as List).length -
-              //               1),
-              //     ),
-              //     itemCount: (widget.restaurant.menus!['foods'] as List).length,
-              //   ),
-              // ),
-
-              // drinks
-              Padding(
-                padding: const EdgeInsets.only(
-                  left: 16,
-                  right: 16,
-                  top: 24,
-                  bottom: 8,
-                ),
-                child: Text(
-                  'Drinks',
-                  style: TextStyle(
-                    fontSize: _utils.textTheme.headline6!.fontSize,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              // SizedBox(
-              //   height: MediaQuery.of(context).size.height / 4,
-              //   child: ListView.builder(
-              //     physics: const BouncingScrollPhysics(),
-              //     padding: const EdgeInsets.all(0),
-              //     scrollDirection: Axis.horizontal,
-              //     itemBuilder: (context, index) => _listItemMenu(
-              //       (widget.restaurant.menus!['drinks'] as List)[index]['name'],
-              //       index,
-              //       index ==
-              //           ((widget.restaurant.menus!['drinks'] as List).length -
-              //               1),
-              //       isFood: false,
-              //     ),
-              //     itemCount:
-              //         (widget.restaurant.menus!['drinks'] as List).length,
-              //   ),
-              // ),
-
-              const SizedBox(height: 32),
-            ],
-          )),
+        return _buildDetailScreen(controller);
+      }),
     );
   }
 
-  Widget _listItemMenu(String name, int index, bool isLast,
-      {bool isFood = true}) {
+  Widget _buildDetailScreen(RestaurantDetailController controller) {
+    return Container();
+  }
+
+  Widget _errorMessage(String message) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          Container(
+            decoration: BoxDecoration(
+              borderRadius: const BorderRadius.all(Radius.circular(16)),
+              color: Get.theme.colorScheme.errorContainer,
+            ),
+            padding: const EdgeInsets.all(16),
+            child: Icon(
+              Icons.info_outline_rounded,
+              color: Get.theme.colorScheme.error,
+            ),
+          ),
+          const SizedBox(height: 16),
+          Text(
+            'Error!',
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontSize: Get.textTheme.headline6!.fontSize,
+              color: Get.theme.colorScheme.onBackground,
+            ),
+          ),
+          const SizedBox(height: 4),
+          Text(
+            message,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontSize: Get.textTheme.subtitle1!.fontSize,
+              color: Get.theme.colorScheme.onBackground.withOpacity(.64),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget get _loading {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      alignment: Alignment.center,
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          const CircularProgressIndicator(),
+          const SizedBox(height: 16),
+          Text(
+            'Loading restaurant details...',
+            style: TextStyle(
+              color: Get.theme.colorScheme.onBackground.withOpacity(.64),
+              fontSize: Get.textTheme.subtitle1!.fontSize,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _listItemMenu(
+    String name,
+    int index,
+    bool isLast, {
+    bool isFood = true,
+  }) {
     return Card(
       margin: EdgeInsets.only(
         left: index == 0 ? 16 : 8,
@@ -182,7 +116,7 @@ class _State extends State<RestaurantDetailPage> {
       ),
       clipBehavior: Clip.hardEdge,
       child: SizedBox(
-          width: MediaQuery.of(context).size.width / 1.64,
+          width: Get.size.width / 1.64,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -203,7 +137,7 @@ class _State extends State<RestaurantDetailPage> {
                       Text(
                         name,
                         style: TextStyle(
-                          fontSize: _utils.textTheme.bodyText1!.fontSize,
+                          fontSize: Get.textTheme.bodyText1!.fontSize,
                           color: Colors.black,
                         ),
                       ),
@@ -211,7 +145,7 @@ class _State extends State<RestaurantDetailPage> {
                         'IDR 15.000',
                         style: TextStyle(
                           color: Colors.grey.shade700,
-                          fontSize: _utils.textTheme.caption!.fontSize,
+                          fontSize: Get.textTheme.caption!.fontSize,
                         ),
                       ),
                     ]),

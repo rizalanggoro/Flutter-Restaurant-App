@@ -2,6 +2,7 @@ import 'package:dicoding_restaurant_app/controller/home_list.dart';
 import 'package:dicoding_restaurant_app/data/model/restaurant.dart';
 import 'package:dicoding_restaurant_app/data/model/result/restaurant_list_result.dart';
 import 'package:dicoding_restaurant_app/data/states/result_state.dart';
+import 'package:dicoding_restaurant_app/pages/restaurant_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
@@ -142,7 +143,10 @@ class HomeListFragment extends GetView<HomeListController> {
         color: Get.theme.colorScheme.surfaceVariant,
         clipBehavior: Clip.hardEdge,
         child: InkWell(
-          onTap: () {},
+          onTap: () => Get.toNamed(
+            RestaurantDetailPage.route,
+            arguments: {'id': restaurant.id},
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [

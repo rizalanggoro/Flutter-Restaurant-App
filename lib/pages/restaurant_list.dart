@@ -202,12 +202,12 @@ class _State extends State<RestaurantListPage> {
         clipBehavior: Clip.hardEdge,
         child: InkWell(
           onTap: () {
-            Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) =>
-                      RestaurantDetailPage(restaurant: restaurant),
-                ));
+            // Navigator.push(
+            //     context,
+            //     MaterialPageRoute(
+            //       builder: (context) =>
+            //           RestaurantDetailPage(restaurant: restaurant),
+            //     ));
           },
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,

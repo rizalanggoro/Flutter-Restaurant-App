@@ -1,9 +1,9 @@
-import 'package:dicoding_restaurant_app/data/model/restaurant.dart';
+import 'package:dicoding_restaurant_app/data/model/restaurant_detail.dart';
 
 class RestaurantDetailResult {
   final bool error;
   final String message;
-  final Restaurant restaurant;
+  final RestaurantDetail restaurant;
 
   RestaurantDetailResult({
     required this.error,
@@ -15,6 +15,6 @@ class RestaurantDetailResult {
       RestaurantDetailResult(
         error: map['error'],
         message: map['message'],
-        restaurant: map['restaurant'],
+        restaurant: RestaurantDetail.fromMap(map['restaurant']),
       );
 }

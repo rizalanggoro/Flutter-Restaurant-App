@@ -6,9 +6,9 @@ class RestaurantDetail {
   final String address;
   final String pictureId;
   final double rating;
-  final List<Map<String, dynamic>> categories;
-  final List<List<Map<String, dynamic>>> menus;
-  final List<Map<String, dynamic>> customerReviews;
+  final List<dynamic> categories;
+  final Map<String, dynamic> menus;
+  final List<dynamic> customerReviews;
 
   RestaurantDetail({
     required this.id,
@@ -31,7 +31,7 @@ class RestaurantDetail {
         city: map['city'],
         address: map['address'],
         pictureId: map['pictureId'],
-        rating: map['rating'],
+        rating: map['rating'] is int ? (map['rating'] + 0.0) : map['rating'],
         categories: map['categories'],
         menus: map['menus'],
         customerReviews: map['customerReviews'],
