@@ -1,8 +1,8 @@
 import 'dart:ui';
 
 import 'package:dicoding_restaurant_app/pages/home.dart';
-import 'package:dicoding_restaurant_app/utils/utils.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 class SplashPage extends StatelessWidget {
   static String route = '/splash';
@@ -10,8 +10,6 @@ class SplashPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Utils utils = Utils(context);
-
     return Scaffold(
       body: Stack(
         children: [
@@ -43,8 +41,8 @@ class SplashPage extends StatelessWidget {
                     'Less Talk,\nEat More',
                     style: TextStyle(
                       color: const Color(0xffd2a89b),
-                      fontSize: utils.textTheme.headline3!.fontSize,
-                      fontWeight: FontWeight.w500,
+                      fontSize: Get.textTheme.headline3!.fontSize,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ),
@@ -69,7 +67,7 @@ class SplashPage extends StatelessWidget {
                           'Find your favorite restaurant here',
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: utils.textTheme.headline5!.fontSize,
+                            fontSize: Get.textTheme.headline5!.fontSize,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
@@ -78,19 +76,14 @@ class SplashPage extends StatelessWidget {
                           'The best restaurant app in the world in 2023.',
                           style: TextStyle(
                             color: Colors.white.withOpacity(.64),
-                            fontSize: utils.textTheme.subtitle1!.fontSize,
+                            fontSize: Get.textTheme.subtitle1!.fontSize,
                           ),
                         ),
                         const SizedBox(height: 16),
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () {
-                              Navigator.pushReplacementNamed(
-                                context,
-                                HomePage.route,
-                              );
-                            },
+                            onPressed: () => Get.toNamed(HomePage.route),
                             child: const Text('Get started'),
                           ),
                         ),
