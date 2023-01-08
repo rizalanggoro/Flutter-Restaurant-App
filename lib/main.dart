@@ -1,4 +1,3 @@
-import 'package:dicoding_restaurant_app/data/model/restaurant.dart';
 import 'package:dicoding_restaurant_app/pages/home.dart';
 import 'package:dicoding_restaurant_app/pages/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/pages/restaurant_list.dart';
@@ -24,7 +23,7 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         colorSchemeSeed: const Color(0xff386a20),
       ),
-      initialRoute: HomePage.route,
+      initialRoute: SplashPage.route,
       routes: {
         SplashPage.route: (context) => const SplashPage(),
         HomePage.route: (context) => const HomePage(),
