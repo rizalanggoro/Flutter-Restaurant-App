@@ -13,6 +13,7 @@ class HomeSearchFragment extends GetView<HomeSearchController> {
     final HomeSearchController controller = Get.find<HomeSearchController>();
 
     return SingleChildScrollView(
+      physics: const BouncingScrollPhysics(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -87,6 +88,24 @@ class HomeSearchFragment extends GetView<HomeSearchController> {
         var state = controller.resultState.value;
         if (state == ResultState.error) {
           return Text('error: ${controller.message}');
+        } else if (state == ResultState.loading) {
+          return Container(
+            alignment: Alignment.center,
+            padding: const EdgeInsets.all(24),
+            child: Column(
+              children: [
+                const CircularProgressIndicator(),
+                const SizedBox(height: 16),
+                Text(
+                  'Looking for a restaurant...',
+                  style: TextStyle(
+                    fontSize: Get.textTheme.subtitle1!.fontSize,
+                    color: Get.theme.colorScheme.onBackground.withOpacity(.64),
+                  ),
+                ),
+              ],
+            ),
+          );
         } else if (state == ResultState.noData) {
           return Container(
             alignment: Alignment.center,
