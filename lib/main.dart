@@ -1,3 +1,4 @@
+import 'package:dicoding_restaurant_app/controller/bindings/app_bindings.dart';
 import 'package:dicoding_restaurant_app/pages/home.dart';
 import 'package:dicoding_restaurant_app/pages/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/pages/restaurant_list.dart';
@@ -24,6 +25,7 @@ class MyApp extends StatelessWidget {
         colorSchemeSeed: const Color(0xff386a20),
       ),
       initialRoute: SplashPage.route,
+      initialBinding: AppBindings(),
       routes: {
         SplashPage.route: (context) => const SplashPage(),
         HomePage.route: (context) => const HomePage(),

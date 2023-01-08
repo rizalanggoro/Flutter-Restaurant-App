@@ -12,7 +12,7 @@ class HomeListFragment extends GetView<HomeListController> {
 
   @override
   Widget build(BuildContext context) {
-    final HomeListController controller = Get.put(HomeListController());
+    final HomeListController controller = Get.find<HomeListController>();
 
     return SingleChildScrollView(
       physics: const BouncingScrollPhysics(),
