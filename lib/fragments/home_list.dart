@@ -5,7 +5,6 @@ import 'package:dicoding_restaurant_app/data/states/result_state.dart';
 import 'package:dicoding_restaurant_app/pages/restaurant_detail.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
-import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:get/get.dart';
 
 class HomeListFragment extends GetView<HomeListController> {
@@ -13,9 +12,6 @@ class HomeListFragment extends GetView<HomeListController> {
 
   @override
   Widget build(BuildContext context) {
-    FlutterStatusbarcolor.setStatusBarColor(Colors.transparent);
-    FlutterStatusbarcolor.setStatusBarWhiteForeground(false);
-
     final HomeListController controller = Get.put(HomeListController());
 
     return SingleChildScrollView(
