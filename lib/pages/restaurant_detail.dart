@@ -1,5 +1,4 @@
 import 'package:dicoding_restaurant_app/controller/restaurant_detail.dart';
-import 'package:dicoding_restaurant_app/data/model/restaurant.dart';
 import 'package:dicoding_restaurant_app/data/model/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/data/states/result_state.dart';
 import 'package:flutter/material.dart';
@@ -19,7 +18,7 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
 
     RestaurantDetailController controller =
         Get.put(RestaurantDetailController());
-    // controller.fetchData(id);
+    controller.fetchData(id);
 
     return Scaffold(
       backgroundColor: Get.theme.colorScheme.background,
@@ -218,7 +217,7 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return _listItemMenu(
-                  title: restaurantDetail.name,
+                  title: listFoods[index]['name'],
                   isFirst: index == 0,
                   isLast: index == (listFoods.length - 1),
                   isFood: true,
@@ -251,7 +250,7 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return _listItemMenu(
-                  title: restaurantDetail.name,
+                  title: listDrinks[index]['name'],
                   isFirst: index == 0,
                   isLast: index == (listDrinks.length - 1),
                   isFood: false,
