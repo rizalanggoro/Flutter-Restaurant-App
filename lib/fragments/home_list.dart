@@ -151,7 +151,7 @@ class HomeListFragment extends GetView<HomeListController> {
                 height: Get.size.height / 4,
                 clipBehavior: Clip.hardEdge,
                 decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(8)),
+                  borderRadius: BorderRadius.all(Radius.circular(16)),
                 ),
                 child: Image.network(
                   'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
