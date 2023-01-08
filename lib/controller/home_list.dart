@@ -33,7 +33,7 @@ class HomeListController extends GetxController {
       }
     } catch (err) {
       resultState.value = ResultState.error;
-      _message = 'Error -> $err';
+      _message = 'Something went wrong! Please try again later...';
     }
   }
 }

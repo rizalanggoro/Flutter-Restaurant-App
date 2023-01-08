@@ -3,6 +3,7 @@ import 'package:dicoding_restaurant_app/data/model/restaurant.dart';
 import 'package:dicoding_restaurant_app/data/model/result/restaurant_list_result.dart';
 import 'package:dicoding_restaurant_app/data/states/result_state.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_statusbarcolor_ns/flutter_statusbarcolor_ns.dart';
 import 'package:get/get.dart';
 
@@ -58,20 +59,56 @@ class HomeListFragment extends GetView<HomeListController> {
           // list restaurant
           Obx(() {
             var state = controller.resultState;
+
             switch (state.value) {
               case ResultState.loading:
-                return CircularProgressIndicator();
-
-              case ResultState.noData:
-                return Text(controller.message);
+                return _loading();
 
               case ResultState.hasData:
                 return _listRestaurant(controller.restaurantListResult);
 
+              case ResultState.noData:
               case ResultState.error:
-                return Text(controller.message);
+                return _message(controller.message);
             }
           }),
+        ],
+      ),
+    );
+  }
+
+  Widget _message(String message) {
+    return Container(
+      padding: const EdgeInsets.all(24),
+      alignment: Alignment.center,
+      child: Text(
+        message,
+        style: TextStyle(
+          fontSize: Get.textTheme.subtitle1!.fontSize,
+          color: Get.theme.colorScheme.onBackground.withOpacity(.64),
+        ),
+      ),
+    );
+  }
+
+  Widget _loading() {
+    return Container(
+      width: double.infinity,
+      padding: const EdgeInsets.all(24),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisSize: MainAxisSize.max,
+        children: [
+          const CircularProgressIndicator(),
+          const SizedBox(height: 24),
+          Text(
+            'Loading restaurant data...',
+            style: TextStyle(
+              fontSize: Get.textTheme.subtitle1!.fontSize,
+              color: Get.theme.colorScheme.onBackground.withOpacity(.64),
+            ),
+          ),
         ],
       ),
     );
@@ -101,6 +138,8 @@ class HomeListFragment extends GetView<HomeListController> {
         bottom: isLast ? 8 : 0,
       ),
       child: Card(
+        elevation: 0,
+        color: Get.theme.colorScheme.surfaceVariant,
         clipBehavior: Clip.hardEdge,
         child: InkWell(
           onTap: () {},
@@ -114,12 +153,9 @@ class HomeListFragment extends GetView<HomeListController> {
                 decoration: const BoxDecoration(
                   borderRadius: BorderRadius.all(Radius.circular(8)),
                 ),
-                child: Hero(
-                  tag: restaurant.pictureId,
-                  child: Image.network(
-                    'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
-                    fit: BoxFit.cover,
-                  ),
+                child: Image.network(
+                  'https://restaurant-api.dicoding.dev/images/small/${restaurant.pictureId}',
+                  fit: BoxFit.cover,
                 ),
               ),
               Padding(
@@ -132,6 +168,7 @@ class HomeListFragment extends GetView<HomeListController> {
                   restaurant.name,
                   style: TextStyle(
                     fontSize: Get.textTheme.headline6!.fontSize,
+                    color: Get.theme.colorScheme.onSurfaceVariant,
                   ),
                 ),
               ),
@@ -146,7 +183,8 @@ class HomeListFragment extends GetView<HomeListController> {
                   overflow: TextOverflow.ellipsis,
                   style: TextStyle(
                     fontSize: Get.textTheme.subtitle1!.fontSize,
-                    color: Colors.grey.shade600,
+                    color:
+                        Get.theme.colorScheme.onSurfaceVariant.withOpacity(.64),
                   ),
                 ),
               ),
@@ -157,15 +195,17 @@ class HomeListFragment extends GetView<HomeListController> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
-                    const Icon(
+                    Icon(
                       Icons.location_on_rounded,
-                      color: Colors.indigo,
+                      size: 24,
+                      color: Get.theme.colorScheme.primary,
                     ),
                     const SizedBox(width: 8),
                     Text(
                       restaurant.city,
                       style: TextStyle(
-                        color: Colors.grey.shade600,
+                        color: Get.theme.colorScheme.onSurfaceVariant
+                            .withOpacity(.64),
                       ),
                     ),
                   ],
@@ -178,15 +218,27 @@ class HomeListFragment extends GetView<HomeListController> {
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 child: Row(
                   children: [
-                    const Icon(
-                      Icons.star_rounded,
-                      color: Colors.amber,
+                    RatingBar.builder(
+                      glow: false,
+                      ignoreGestures: true,
+                      itemSize: 24,
+                      unratedColor: Get.theme.colorScheme.onSurfaceVariant
+                          .withOpacity(.24),
+                      initialRating: restaurant.rating,
+                      itemCount: 5,
+                      allowHalfRating: true,
+                      itemBuilder: (context, index) => const Icon(
+                        Icons.star_rounded,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (value) {},
                     ),
                     const SizedBox(width: 8),
                     Text(
                       '${restaurant.rating}',
                       style: TextStyle(
-                        color: Colors.grey.shade600,
+                        color: Get.theme.colorScheme.onSurfaceVariant
+                            .withOpacity(.64),
                       ),
                     ),
                   ],

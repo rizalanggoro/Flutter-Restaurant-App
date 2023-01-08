@@ -17,6 +17,7 @@ class HomePage extends GetView<HomeController> {
     ];
 
     return Scaffold(
+      backgroundColor: Get.theme.colorScheme.background,
       bottomNavigationBar: Obx(
         () => NavigationBar(
           selectedIndex: controller.navigationBarIndex.value,
