@@ -1,6 +1,7 @@
 import 'package:dicoding_restaurant_app/controller/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/data/model/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/data/states/result_state.dart';
+import 'package:dicoding_restaurant_app/pages/restaurant_add_review.dart';
 import 'package:dicoding_restaurant_app/widget/card_restaurant_menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
@@ -19,7 +20,7 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
 
     RestaurantDetailController controller =
         Get.put(RestaurantDetailController());
-    // controller.fetchData(id);
+    controller.fetchData(id);
 
     return Scaffold(
       backgroundColor: Get.theme.colorScheme.background,
@@ -283,7 +284,13 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () {},
+                  onPressed: () => Get.toNamed(
+                    RestaurantAddReviewPage.route,
+                    arguments: {
+                      'id': restaurantDetail.id,
+                      'name': restaurantDetail.name,
+                    },
+                  ),
                   child: const Text('Add review'),
                 ),
               ],

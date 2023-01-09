@@ -1,7 +1,7 @@
 import 'package:dicoding_restaurant_app/controller/bindings/app_bindings.dart';
 import 'package:dicoding_restaurant_app/pages/home.dart';
+import 'package:dicoding_restaurant_app/pages/restaurant_add_review.dart';
 import 'package:dicoding_restaurant_app/pages/restaurant_detail.dart';
-import 'package:dicoding_restaurant_app/pages/restaurant_list.dart';
 import 'package:dicoding_restaurant_app/pages/splash.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -30,7 +30,8 @@ class MyApp extends StatelessWidget {
         SplashPage.route: (context) => const SplashPage(),
         HomePage.route: (context) => const HomePage(),
         RestaurantDetailPage.route: (context) => const RestaurantDetailPage(),
-        RestaurantListPage.route: (context) => const RestaurantListPage(),
+        RestaurantAddReviewPage.route: (context) =>
+            const RestaurantAddReviewPage(),
       },
     );
   }
