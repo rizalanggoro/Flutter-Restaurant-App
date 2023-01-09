@@ -83,7 +83,7 @@ class SplashPage extends StatelessWidget {
                         SizedBox(
                           width: double.infinity,
                           child: ElevatedButton(
-                            onPressed: () => Get.toNamed(HomePage.route),
+                            onPressed: () => Get.offNamed(HomePage.route),
                             child: const Text('Get started'),
                           ),
                         ),
