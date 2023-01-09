@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:dicoding_restaurant_app/controller/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/data/states/result_state.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -53,6 +54,8 @@ class RestaurantAddReviewController extends GetxController {
             enableEditing.value = true;
             _textEditingControllerName.text = '';
             _textEditingControllerReview.text = '';
+
+            Get.find<RestaurantDetailController>().fetchData(id);
 
             Future.delayed(
               const Duration(seconds: 2),
