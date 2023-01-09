@@ -18,10 +18,10 @@ class CardRestaurant extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: EdgeInsets.only(
-        left: 8,
-        right: 8,
+        left: 12,
+        right: 12,
         top: 8,
-        bottom: isLast ? 8 : 0,
+        bottom: isLast ? 12 : 0,
       ),
       child: Card(
         margin: const EdgeInsets.all(0),
