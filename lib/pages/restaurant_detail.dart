@@ -1,6 +1,7 @@
 import 'package:dicoding_restaurant_app/controller/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/data/model/restaurant_detail.dart';
 import 'package:dicoding_restaurant_app/data/states/result_state.dart';
+import 'package:dicoding_restaurant_app/widget/card_restaurant_menu_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:get/get.dart';
@@ -18,7 +19,7 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
 
     RestaurantDetailController controller =
         Get.put(RestaurantDetailController());
-    controller.fetchData(id);
+    // controller.fetchData(id);
 
     return Scaffold(
       backgroundColor: Get.theme.colorScheme.background,
@@ -215,7 +216,7 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
               padding: const EdgeInsets.all(0),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return _listItemMenu(
+                return CardRestaurantMenuItem(
                   title: listFoods[index]['name'],
                   isFirst: index == 0,
                   isLast: index == (listFoods.length - 1),
@@ -248,7 +249,7 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
               padding: const EdgeInsets.all(0),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return _listItemMenu(
+                return CardRestaurantMenuItem(
                   title: listDrinks[index]['name'],
                   isFirst: index == 0,
                   isLast: index == (listDrinks.length - 1),
@@ -270,12 +271,22 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
               left: 16,
               bottom: 8,
             ),
-            child: Text(
-              'Customer Reviews',
-              style: TextStyle(
-                fontSize: Get.textTheme.headline6!.fontSize,
-                fontWeight: FontWeight.bold,
-              ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    'Customer Reviews',
+                    style: TextStyle(
+                      fontSize: Get.textTheme.headline6!.fontSize,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ),
+                ElevatedButton(
+                  onPressed: () {},
+                  child: const Text('Add review'),
+                ),
+              ],
             ),
           ),
           ListView.builder(
@@ -376,79 +387,6 @@ class RestaurantDetailPage extends GetView<RestaurantDetailController> {
               child: Divider(),
             ),
         ],
-      ),
-    );
-  }
-
-  Widget _listItemMenu({
-    required String title,
-    required bool isFirst,
-    required bool isLast,
-    required bool isFood,
-  }) {
-    return Container(
-      margin: EdgeInsets.only(
-        left: isFirst ? 16 : 8,
-        right: isLast ? 16 : 0,
-      ),
-      width: Get.size.width / 1.64,
-      height: Get.size.height / 4,
-      child: Card(
-        elevation: 0,
-        margin: const EdgeInsets.all(0),
-        clipBehavior: Clip.hardEdge,
-        shape: RoundedRectangleBorder(
-          side: BorderSide(
-            color: Get.theme.colorScheme.outline,
-          ),
-          borderRadius: const BorderRadius.all(Radius.circular(16)),
-        ),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Expanded(
-              child: Container(
-                width: double.infinity,
-                clipBehavior: Clip.hardEdge,
-                decoration: const BoxDecoration(
-                  borderRadius: BorderRadius.all(Radius.circular(16)),
-                ),
-                child: Image.network(
-                  'https://source.unsplash.com/random/?${isFood ? 'food' : 'drink'}',
-                  fit: BoxFit.cover,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 16,
-                right: 16,
-                top: 16,
-              ),
-              child: Text(
-                title,
-                style: TextStyle(
-                  fontSize: Get.textTheme.subtitle1!.fontSize,
-                  color: Get.theme.colorScheme.onBackground,
-                ),
-              ),
-            ),
-            Padding(
-              padding: const EdgeInsets.only(
-                left: 16,
-                right: 16,
-                bottom: 16,
-              ),
-              child: Text(
-                'IDR 15.000',
-                style: TextStyle(
-                  fontSize: Get.textTheme.bodyMedium!.fontSize,
-                  color: Get.theme.colorScheme.onBackground.withOpacity(.64),
-                ),
-              ),
-            ),
-          ],
-        ),
       ),
     );
   }
